@@ -15,31 +15,17 @@
 #
 # You should have received a copy of the GNU Lesser General Public License along
 # with this program. If not, see <http://www.gnu.org/licenses/>.
-SHELL:=/bin/bash
 
-include $(OCPI_CDK_DIR)/include/applications.mk
+# settings when targeting this platform.
+OCPI_TARGET_PLATFORM?=ubuntu16p04
 
-ifneq ($(filter $(MAKECMDGOALS),test),)
-  ALL:=bias2_xml bias_xml cat_xml copy ext2file_xml fsk_modem_xml hello hello_xml ptest vsadd xml
-else
-  ALL:=$(wildcard *[^~])
-endif
-
-DOALL=$(AT)\
-  set -e;\
-  set -o pipefail;\
-  for i in $(ALL); do\
-    if test -d $$i; then\
-      echo ========$1 $$i: ;\
-      export TGT=$2;\
-      $(MAKE) --no-print-directory -C $$i $2 2>&1 | tee $${i}_$${TGT:-build}.log;\
-    fi;\
-  done
-
-all:
-	$(call DOALL,Building,)
-clean:
-	$(call DOALL,Cleaning,clean)
-	$(AT)rm -r -f *.log
-test run:
-	$(call DOALL,Running,run)
+OcpiLibraryPathEnv=LD_LIBRARY_PATH
+OcpiRpathOrigin=$${ORIGIN}
+OcpiDynamicSuffix=so
+OCPI_OCL_LIBS=  -lOpenCL
+OCPI_EXTRA_LIBS=rt dl pthread
+OCPI_EXPORT_DYNAMIC=-Xlinker --export-dynamic
+OcpiAsNeeded=-Xlinker --no-as-needed
+CC = gcc
+CXX = c++
+LD = c++

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # This file is protected by Copyright. Please refer to the COPYRIGHT file
 # distributed with this source distribution.
 #
@@ -16,7 +16,7 @@
 #
 # You should have received a copy of the GNU Lesser General Public License along
 # with this program. If not, see <http://www.gnu.org/licenses/>.
-
+set -e
 OCPI_GMP_VERSION=6.1.1
 dir=gmp-$OCPI_GMP_VERSION
 source ./scripts/setup-install.sh \
