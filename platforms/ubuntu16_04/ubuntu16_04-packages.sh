@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU Lesser General Public License along
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 
-# Install prerequisite packages for Centos6
+# Install prerequisite packages for LTS Ubuntu
 echo Installing standard extra packages using "apt-get"
 sudo apt-get update
 sudo apt-get install -y git vim build-essential tcl pax python-dev fakeroot curl zip automake
