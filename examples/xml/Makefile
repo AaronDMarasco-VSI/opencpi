@@ -18,6 +18,8 @@
 
 include ../setup.mk
 
+SHELL:=/bin/bash
+
 all:
 
 CMP= && cmp test.input test.output

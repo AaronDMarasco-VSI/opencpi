@@ -1,3 +1,4 @@
+#!/bin/sh --noprofile
 # This file is protected by Copyright. Please refer to the COPYRIGHT file
 # distributed with this source distribution.
 #
@@ -15,31 +16,12 @@
 #
 # You should have received a copy of the GNU Lesser General Public License along
 # with this program. If not, see <http://www.gnu.org/licenses/>.
-SHELL:=/bin/bash
 
-include $(OCPI_CDK_DIR)/include/applications.mk
-
-ifneq ($(filter $(MAKECMDGOALS),test),)
-  ALL:=bias2_xml bias_xml cat_xml copy ext2file_xml fsk_modem_xml hello hello_xml ptest vsadd xml
-else
-  ALL:=$(wildcard *[^~])
-endif
-
-DOALL=$(AT)\
-  set -e;\
-  set -o pipefail;\
-  for i in $(ALL); do\
-    if test -d $$i; then\
-      echo ========$1 $$i: ;\
-      export TGT=$2;\
-      $(MAKE) --no-print-directory -C $$i $2 2>&1 | tee $${i}_$${TGT:-build}.log;\
-    fi;\
-  done
-
-all:
-	$(call DOALL,Building,)
-clean:
-	$(call DOALL,Cleaning,clean)
-	$(AT)rm -r -f *.log
-test run:
-	$(call DOALL,Running,run)
+if test -f /etc/os-release; then
+  . /etc/os-release
+  if test "$ID" = "ubuntu" -a "$VERSION_ID" = "16.04"; then
+    echo $1 u16p04 $2
+    exit 0
+  fi
+fi
+exit 1
